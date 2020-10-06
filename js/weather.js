@@ -1,16 +1,34 @@
-// http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={"07e2a8964a052cf6f1c86f9c1c5aea2e"}
-
 let iconWeather = document.querySelector(".icon-weather");
+let weatherLocation = document.getElementById("weather-location");
+let weatherFeel = document.getElementById("weather-feel");
+let weatherTemp = document.getElementById("weather-temperature");
+let weatherDescription = document.getElementById("weather-description");
+
+const selectElement = document.getElementById("weather-unit");
+
 let APIKEY = "07e2a8964a052cf6f1c86f9c1c5aea2e";
 
 //  ====== fetch API =======
 async function fetchAPI(openWeather) {
   let response = await fetch(openWeather);
   let json = await response.json();
-  let { clouds, main, name, weather } = json;
+  console.log(json);
+  let {
+    sys: { country },
+    main: { temp, feels_like },
+    name,
+    weather,
+  } = json;
 
-  iconWeather.innerHTML = `${weather[0].icon}`;
-  console.log(iconWeather);
+  let { description, icon } = weather[0];
+
+  iconWeather.src = `http://openweathermap.org/img/wn/${icon}.png`;
+  weatherLocation.textContent = `${name}, ${country}`;
+  weatherDescription.textContent = `${description}`;
+  weatherTemp.textContent = `${temp}°C`;
+  weatherFeel.textContent = `Feels like ${feels_like}°C`;
+
+  weatherDescription.style.textTransform = "capitalize";
 }
 
 let options = {
@@ -20,16 +38,20 @@ let options = {
 };
 
 //  ====== API success =======
+let saveLatLong = [];
+
 function success(pos) {
   let { latitude, longitude } = pos.coords;
-  let openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKEY}`;
+  saveLatLong.push(latitude, longitude);
+
+  let openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKEY}&units=metric`;
+
   fetchAPI(openWeather);
 }
 //  ====== API error =======
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
-
 /**
 An object able to programmatically obtain the position of the device.
 It gives Web content access to the location of the device.
@@ -43,5 +65,15 @@ function getLocation() {
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
-
 getLocation();
+
+selectElement.addEventListener("change", (event) => {
+  let openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=${event.target.value}`;
+
+  if (event.target.value === "Fahrenheit") {
+    openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=imperial`;
+  } else {
+    openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=metric`;
+  }
+  fetchAPI(openWeather);
+});
