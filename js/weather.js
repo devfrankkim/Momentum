@@ -12,7 +12,7 @@ let APIKEY = "07e2a8964a052cf6f1c86f9c1c5aea2e";
 async function fetchAPI(openWeather) {
   let response = await fetch(openWeather);
   let json = await response.json();
-  console.log(json);
+
   let {
     sys: { country },
     main: { temp, feels_like },
@@ -35,6 +35,7 @@ let options = {
   enableHighAccuracy: true,
   timeout: 5000,
   maximumAge: 0,
+  enableHighAccuracy: true,
 };
 
 //  ====== API success =======
