@@ -4,28 +4,63 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Momentum</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="clock-container">
-      <h1>17:50:</h1>
+    <div class="intro-container">
+      <div><span id="intro__name">Hello, what's your name?</span></div>
+      <!-- <input type="text" id="intro__input" /> -->
+
+      <form class="input-name" action="">
+        <input id="intro__input" type="text" placeholder="What is your name?" />
+      </form>
+
+      <button id="intro__continue">Continue</button>
+    </div>
+    <!-- showCSS -->
+    <div class="app-start showCSS">
+      <header class="weather-container">
+        <div class="region">
+          <div class="region_icon">
+            <img class="icon-weather" src="" alt="" />
+            <span id="weather-temperature"></span>
+          </div>
+          <div id="weather-location"></div>
+          <span id="weather-description"></span>
+          <span id="weather-feel"></span>
+          <div>
+            <select id="weather-unit">
+              <option value="Celsius">Celsius</option>
+              <option value="Fahrenheit">Fahrenheit</option>
+            </select>
+          </div>
+        </div>
+      </header>
+      <div class="momentum-app">
+        <div class="clock-container">
+          <h1 class="time"></h1>
+        </div>
+
+        <h4 class="greetings"></h4>
+      </div>
+      <div class="mainfocus">
+        <form class="mainfocus-form" action="">
+          <input
+            id="mainfocus__input"
+            type="text"
+            placeholder="What is your main focus for today?"
+          />
+        </form>
+        <div class="mainfocus-list">
+          <div>Today</div>
+          <div id="mainfocus-list__today"></div>
+        </div>
+      </div>
     </div>
 
-    <form class="input-name" action="">
-      <input class="check-name" type="text" placeholder="What is your name?" />
-    </form>
-    <h4 class="greetings"></h4>
-    <form action="">
-      <input
-        class="make-lists"
-        type="text"
-        placeholder="Make lists for yourself"
-      />
-    </form>
-    <ul>
-      <li>milk</li>
-    </ul>
     <script src="js/clock.js"></script>
     <script src="js/greeting.js"></script>
+    <script src="js/focus.js"></script>
     <script src="js/bg.js"></script>
     <script src="js/todo.js"></script>
     <script src="js/weather.js"></script>
