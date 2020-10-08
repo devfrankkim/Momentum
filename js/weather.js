@@ -17,26 +17,20 @@ async function fetchAPI(openWeather) {
     sys: { country },
     main: { temp, feels_like },
     name,
-    weather,
+    // let { description, icon } = weather[0];
+    weather: [{ description, icon }],
   } = json;
-
-  let { description, icon } = weather[0];
 
   iconWeather.src = `http://openweathermap.org/img/wn/${icon}.png`;
   weatherLocation.textContent = `${name}, ${country}`;
-  weatherDescription.textContent = `${description}`;
+  weatherDescription.textContent = `${description}.`;
   weatherTemp.textContent = `${temp}°C`;
   weatherFeel.textContent = `Feels like ${feels_like}°C`;
 
   weatherDescription.style.textTransform = "capitalize";
 }
 
-let options = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0,
-  enableHighAccuracy: true,
-};
+let options = { maximumAge: 0, timeout: 10000, enableHighAccuracy: true };
 
 //  ====== API success =======
 let saveLatLong = [];
