@@ -1,7 +1,204 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,400;1,600&display=swap");
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.placeholderred::placeholder {
+  color: red;
+}
 body {
   font-size: 10px;
+  line-height: 1.5;
+  height: 100%;
+  width: 100%;
+  font-family: "Barlow Condensed", sans-serif;
+}
+*:focus {
+  outline: none;
+  user-select: none;
+}
+/*
+::placeholder {
+  color: red;
+  opacity: 1;  
+  }
+  
+  */
+
+.showCSS {
+  visibility: hidden;
+}
+.intro-container {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.3rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  white-space: normal;
+}
+.intro-container #intro__input {
+  border: 0;
+  border-bottom: black solid 1px;
+  background: 0;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  /* overflow: hidden; */
 }
 
-.greetings {
-  visibility: hidden;
+.intro-container #intro__continue {
+  background: 0 0;
+  border-radius: 100px;
+  cursor: pointer;
+  padding: 9px 15px 10px;
+  font-size: 0.5rem;
+  margin: auto;
+}
+/* img {  
+  display: block;
+}
+
+a {
+  text-decoration: none;
+} */
+
+.icon:before {
+  font-family: "MeteoconsRegular";
+  content: attr(data-icon);
+}
+.weather-container {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-top: 2rem;
+  right: 0;
+}
+.weather-container .region {
+  font-size: 0.9rem;
+}
+
+#weather-unit {
+  font-size: 0.7rem;
+}
+#weather-temperature {
+  font-size: 1.8rem;
+}
+.icon-weather {
+  display: inline-block;
+}
+
+.region_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.clock-container {
+  max-width: 50vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.clock-container .time {
+  font-size: 3.5rem;
+  text-align: center;
+}
+
+.momentum-app {
+  margin: auto;
+  text-align: center;
+  width: 50vw;
+  font-size: 0.9rem;
+  margin-top: 3rem;
+}
+.momentum-app .greetings {
+  font-size: 1.6rem;
+}
+/* .momentum-app #mainfocus__input {
+  width: 100%;
+  padding-top: 4px;
+  display: block;
+  background: 0;
+  border: 0;
+  border-bottom: 2px solid #fff;
+  color: rgb(238, 41, 41);
+  font-weight: 500;
+  outline: 0;
+  text-align: center;
+  transition: border-color 0.2s ease;
+} */
+
+.mainfocus {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+.mainfocus #mainfocus__input {
+  border: 0;
+  border-bottom: black solid 1px;
+  background: 0;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  width: 15rem;
+}
+
+@media (min-width: 481px) {
+  /* ex) ipad */
+  body {
+    background: grey;
+  }
+  .weather-container .region {
+    font-size: 1rem;
+  }
+
+  #weather-unit {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .weather-container {
+    padding: 0.825rem;
+    right: 0;
+    position: absolute;
+    top: 0;
+  }
+  .momentum-app {
+    margin: auto;
+    text-align: center;
+    width: 50vw;
+    margin-top: 18rem;
+  }
+
+  .clock-container .time {
+    font-size: 5rem;
+    text-align: center;
+  }
+
+  .momentum-app .greetings {
+    font-size: 2rem;
+  }
+}
+@media (min-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (min-width: 961px) {
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+}
+@media (min-width: 1025px) {
+  /* big landscape tablets, laptops, and desktops */
+}
+@media (min-width: 1281px) {
+  /* hi-res laptops and desktops */
 }
