@@ -3,12 +3,14 @@ const introContainer = document.querySelector(".intro-container");
 const nameForm = document.querySelector(".input-name");
 const checkName = document.getElementById("intro__input");
 const introContinue = document.getElementById("intro__continue");
+const appStart = document.querySelector(".app-start");
 let greeting = document.querySelector(".greetings");
 let getLSG = localStorage.getItem("name");
 
 if (getLSG) {
   checkMorningNight(getLSG);
   introContainer.classList.add("showCSS");
+  appStart.classList.remove("showCSS");
 }
 
 function checkMorningNight(value) {
@@ -39,6 +41,7 @@ nameForm.addEventListener("submit", (e) => {
     localStorage.setItem("name", checkValue);
     checkMorningNight(checkValue);
     introContainer.classList.add("showCSS");
+    appStart.classList.remove("showCSS");
   } else {
     placeholderColor(checkName);
   }
@@ -51,6 +54,7 @@ introContinue.addEventListener("click", (e) => {
     localStorage.setItem("name", targetName);
     checkMorningNight(targetName);
     introContainer.classList.add("showCSS");
+    appStart.classList.remove("showCSS");
   } else {
     placeholderColor(checkName);
   }
