@@ -1,0 +1,8 @@
+- [x] Live clock
+- [x] Greetings - Morning / Afternoon / Evening
+- [x] Weather API , add weather icons, Celsius, Fahrenheit
+- [] Quote
+- [] To-do-list
+- [] Sliders with images (random & slide)
+- [] scroll up (arrow icon)
+- [] Responsiveness
