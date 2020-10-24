@@ -2,78 +2,152 @@ const mainfocusForm = document.querySelector(".mainfocus-form");
 const mainfocusInput = document.getElementById("mainfocus__input");
 const mainfocusToday = document.getElementById("mainfocus-list__today");
 
+let toDos = [];
+let finished = [];
+
+const finishOn = (e) => {
+  let onID = new Date().getTime();
+  let finishObj = {
+    id: onID,
+    toggle: "ON",
+  };
+  finished.push(finishObj);
+
+  localStorage.setItem("toggle", JSON.stringify(finished));
+  e.target.parentElement.classList.toggle("done");
+};
+
+const finishOff = (e) => {
+  localStorage.setItem("toggle", null);
+  e.target.parentElement.classList.toggle("done");
+  console.log("OFF");
+};
+
 const deleteItem = (e) => {
   e.target.parentElement.remove();
 };
 
-const finishItem = (e) => {
-  console.log(e.target.parentElement.classList.toggle("done"));
-};
+let parsedFinished = JSON.parse(localStorage.getItem("toggle"));
 
-const addLists = (e) => {
-  e.preventDefault();
-  if (mainfocusInput.value) {
-    let todayMainValue = mainfocusInput.value;
-    let toDoList = document.createElement("li");
-    let finishedBtn = document.createElement("button");
-    let deleteBtn = document.createElement("button");
-
-    finishedBtn.textContent = "✅";
-    deleteBtn.textContent = "❌";
-
-    finishedBtn.classList.add(".finished");
-    deleteBtn.classList.add(".delete");
-
-    toDoList.innerHTML = `<span>${todayMainValue}</span> <button class="finished">✅</button><button class="delete">❌</button>`;
-    mainfocusToday.appendChild(toDoList);
-
-    saveToDos(todayMainValue);
-    mainfocusInput.value = "";
-
-    let deleteB = document.querySelectorAll(".delete");
-    let finishB = document.querySelectorAll(".finished");
-
-    //   deleteB.forEach((btn) => {
-    //     btn.addEventListener("click", deleteItem);
-    //   });
-    //   finishB.forEach((btn) => {
-    //     btn.addEventListener("click", finishItem);
-    //   });
+const toggleParsed = (e) => {
+  if (parsedFinished) {
+    console.log(parsedFinished);
+    parsedFinished.forEach((finish) => {
+      if (finish["toggle"] === "ON") {
+        localStorage.setItem("padding");
+      }
+    });
   }
 };
 
-function paintToDo(value) {
-  mainfocusToday.textContent = value;
+const finishItem = (e) => {
+  let target = e.target;
+  let id = new Date().getTime();
+  target.classList.add(id);
+
+  // if (localStorage.getItem("toggle")) {
+  //   console.log("ON");
+  // }
+
+  finishOn(e);
+  // toggleParsed(e);
+};
+mainfocusToday.addEventListener("click", (e) => {
+  if (e.target.classList.contains("finished")) {
+    finishItem(e);
+    var event = e;
+    console.log(event);
+  } else if (e.target.matches(".delete")) {
+    deleteItem(e);
+  }
+});
+
+function saveToDos() {
+  localStorage.setItem("today-focus", JSON.stringify(toDos));
+}
+
+function addLists(todayMainValue) {
+  let toDoList = document.createElement("li");
+  let span = document.createElement("span");
+  let finishBtn = document.createElement("button");
+  let deleteBtn = document.createElement("button");
+  let newId = toDos.length + 1;
+
+  span.textContent = todayMainValue;
+  finishBtn.textContent = "✅";
+  deleteBtn.textContent = "❌";
+  finishBtn.classList.add("finished");
+  deleteBtn.classList.add("delete");
+
+  toDoList.appendChild(span);
+  toDoList.appendChild(finishBtn);
+  toDoList.appendChild(deleteBtn);
+
+  mainfocusToday.appendChild(toDoList);
+
+  let toDoObj = {
+    value: todayMainValue,
+    id: newId,
+  };
+
+  toDos.push(toDoObj);
+  saveToDos();
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  let todayMainValue = mainfocusInput.value;
+  addLists(todayMainValue);
+  mainfocusInput.value = "";
 }
 
 function loadToDos() {
   let getLSGItem = localStorage.getItem("today-focus");
-  if (getLSGItem) {
+  let finishedItem = localStorage.getItem("finished");
+
+  if (getLSGItem !== null) {
     const parsedToDos = JSON.parse(getLSGItem);
-    console.log(parsedToDos);
 
-    // parsedToDos.forEach(function (toDo) {
-    //   console.log(toDo);
-    //   paintToDo(toDo.text);
-    // });
+    parsedToDos.forEach((btn) => {
+      addLists(btn.value);
+    });
   }
-}
-
-function saveToDos(todayMainValue) {
-  localStorage.setItem("today-focus", JSON.stringify(todayMainValue));
+  //   if (finishedItem !== null) {
+  //     const parsedToDos = JSON.parse(finishedItem);
+  //     console.log(parsedToDos);
+  //   }
 }
 
 function init() {
   loadToDos();
-  mainfocusForm.addEventListener("submit", addLists);
+  mainfocusForm.addEventListener("submit", handleSubmit);
 }
 
-mainfocusToday.addEventListener("click", ({ target }) => {
-  if (target.classList.contains("finished")) {
-    target.parentElement.classList.toggle("done");
-  } else if (target.matches(".delete")) {
-    target.parentElement.remove();
-  }
-});
-
 init();
+
+// if (getLSGItem !== null) {
+//   const parsedToDos = JSON.parse(getLSGItem);
+
+//   parsedToDos.forEach((btn) => {
+//     addLists(btn.value);
+//   });
+// }
+
+// if (target.classList.contains(id)) {
+//   finishOn(e);
+// }
+// let finishedId = {
+//   clikedId: `${target.classList.add(id)}`,
+//   toggle: `${JSON.parse(localStorage.getItem("toggle"))}`,
+// };
+// console.log(finishedId);
+
+// finishToggle = localStorage.getItem("toggle");
+// if (finishToggle === "ON") {
+//   finishOff(e);
+// } else {
+//   finishOn(e);
+// }
+
+// finished.push(finishedId);
+// console.log(finished);
