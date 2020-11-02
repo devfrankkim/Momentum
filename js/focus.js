@@ -2,7 +2,7 @@ const mainfocusForm = document.querySelector(".mainfocus-form");
 const mainfocusInput = document.getElementById("mainfocus__input");
 const mainfocusToday = document.getElementById("mainfocus-list__today");
 const completedItems = document.getElementById("completed-items");
-const signOut = document.getElementById('signout')
+// const signOut = document.getElementById('signout')
 
 let toDos = [];
 /*********************************************
@@ -84,7 +84,7 @@ function delelteAction(e) {
 function renderName(){
   localStorage.setItem("name", "");
   localStorage.setItem("signout", "");
-  history.go();
+  location.reload();
 }
 
 function clearData(){
@@ -94,7 +94,6 @@ function clearData(){
   if(items && items.length > 0){
     toDos = []
   }
-  
   
   renderHTML(toDos, false, mainfocusToday);
   renderHTML(toDos, true, completedItems);  
