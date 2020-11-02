@@ -4,8 +4,6 @@ const mainfocusToday = document.getElementById("mainfocus-list__today");
 const completedItems = document.getElementById("completed-items");
 var signOut = document.getElementById('signout')
 
-// const signOut = document.getElementById('signout')
-
 let toDos = [];
 /*********************************************
   FUNCTIONS
