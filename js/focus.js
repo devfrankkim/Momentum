@@ -1,153 +1,142 @@
 const mainfocusForm = document.querySelector(".mainfocus-form");
 const mainfocusInput = document.getElementById("mainfocus__input");
 const mainfocusToday = document.getElementById("mainfocus-list__today");
+const completedItems = document.getElementById("completed-items");
 
 let toDos = [];
-let finished = [];
+/*********************************************
+  FUNCTIONS
+*********************************************/
 
-const finishOn = (e) => {
-  let onID = new Date().getTime();
-  let finishObj = {
-    id: onID,
-    toggle: "ON",
-  };
-  finished.push(finishObj);
-
-  localStorage.setItem("toggle", JSON.stringify(finished));
-  e.target.parentElement.classList.toggle("done");
-};
-
-const finishOff = (e) => {
-  localStorage.setItem("toggle", null);
-  e.target.parentElement.classList.toggle("done");
-  console.log("OFF");
-};
-
-const deleteItem = (e) => {
-  e.target.parentElement.remove();
-};
-
-let parsedFinished = JSON.parse(localStorage.getItem("toggle"));
-
-const toggleParsed = (e) => {
-  if (parsedFinished) {
-    console.log(parsedFinished);
-    parsedFinished.forEach((finish) => {
-      if (finish["toggle"] === "ON") {
-        localStorage.setItem("padding");
-      }
-    });
-  }
-};
-
-const finishItem = (e) => {
-  let target = e.target;
-  let id = new Date().getTime();
-  target.classList.add(id);
-
-  // if (localStorage.getItem("toggle")) {
-  //   console.log("ON");
-  // }
-
-  finishOn(e);
-  // toggleParsed(e);
-};
-mainfocusToday.addEventListener("click", (e) => {
-  if (e.target.classList.contains("finished")) {
-    finishItem(e);
-    var event = e;
-    console.log(event);
-  } else if (e.target.matches(".delete")) {
-    deleteItem(e);
-  }
-});
-
-function saveToDos() {
-  localStorage.setItem("today-focus", JSON.stringify(toDos));
+function getLocalStorage() {
+  // const items = localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : [];
+  // return items;
+    const items = localStorage.getItem("todos") 
+    return items !== null ? JSON.parse(items) : [];
 }
 
-function addLists(todayMainValue) {
-  let toDoList = document.createElement("li");
-  let span = document.createElement("span");
-  let finishBtn = document.createElement("button");
-  let deleteBtn = document.createElement("button");
+function setLocalStorage(items) {
+  localStorage.setItem("todos", JSON.stringify(items));
+}
+
+
+function addItem(todayMainValue) {
   let newId = toDos.length + 1;
-
-  span.textContent = todayMainValue;
-  finishBtn.textContent = "✅";
-  deleteBtn.textContent = "❌";
-  finishBtn.classList.add("finished");
-  deleteBtn.classList.add("delete");
-
-  toDoList.appendChild(span);
-  toDoList.appendChild(finishBtn);
-  toDoList.appendChild(deleteBtn);
-
-  mainfocusToday.appendChild(toDoList);
-
-  let toDoObj = {
+  const toDoItem = {
     value: todayMainValue,
     id: newId,
+    completed: false
   };
-
-  toDos.push(toDoObj);
-  saveToDos();
+  toDos.push(toDoItem);
 }
 
-function handleSubmit(e) {
+
+function createItemElement(item) {
+  const toDoItem = document.createElement("li");
+  const span = document.createElement("span");
+  const checkbox = document.createElement("INPUT");
+  const deleteBtn = document.createElement("button");
+  toDoItem.dataset.id = item.id;
+  checkbox.setAttribute("type", "checkbox");
+  span.textContent = item.value;
+  
+  deleteBtn.textContent = " ❌ ";
+  (item.completed === true) ? checkbox.checked = true : checkbox.checked = false;
+  deleteBtn.classList.add("delete");
+  
+  toDoItem.appendChild(span);
+  toDoItem.appendChild(checkbox);
+  toDoItem.appendChild(deleteBtn);
+  return toDoItem;
+}
+
+function renderHTML(items, completed, containerDiv) {
+  containerDiv.innerHTML = '';
+  items.forEach(item => item.completed === completed && containerDiv.appendChild(createItemElement(item)))
+}
+
+function handleAddItem(e) {
   e.preventDefault();
-  let todayMainValue = mainfocusInput.value;
-  addLists(todayMainValue);
+  const userInput = mainfocusInput.value;
+  addItem(userInput);
   mainfocusInput.value = "";
+  renderHTML(toDos, false, mainfocusToday);
+  renderHTML(toDos, true, completedItems);
+
+  setLocalStorage(toDos);
 }
 
-function loadToDos() {
-  let getLSGItem = localStorage.getItem("today-focus");
-  let finishedItem = localStorage.getItem("finished");
-
-  if (getLSGItem !== null) {
-    const parsedToDos = JSON.parse(getLSGItem);
-
-    parsedToDos.forEach((btn) => {
-      addLists(btn.value);
-    });
+function checkboxAction(e, completed) {
+  if (e.target.type === 'checkbox') {
+    toDos = toDos.map(item => item.id == e.target.parentElement.getAttribute('data-id') 
+      ? {id: item.id, value: item.value,  completed: completed} : item
+      )
   }
-  //   if (finishedItem !== null) {
-  //     const parsedToDos = JSON.parse(finishedItem);
-  //     console.log(parsedToDos);
-  //   }
 }
 
+function delelteAction(e) {
+  if (e.target.classList.contains('delete')) {
+    toDos = toDos.filter(item => item.id != e.target.parentElement.getAttribute('data-id'));
+  }
+}
+
+function renderName(){
+  localStorage.setItem("name", "");
+  localStorage.setItem("signout", "");
+  history.go();
+}
+
+function clearData(){
+
+  let items = JSON.parse(localStorage.getItem("todos"))
+  
+  if(items && items.length > 0){
+    toDos = []
+  }
+  
+  
+  renderHTML(toDos, false, mainfocusToday);
+  renderHTML(toDos, true, completedItems);  
+  setLocalStorage(toDos)
+
+  renderName()
+}
+
+/*********************************************
+  MAIN FUNCTION
+*********************************************/
 function init() {
-  loadToDos();
-  mainfocusForm.addEventListener("submit", handleSubmit);
+  toDos = getLocalStorage();
+  mainfocusForm.addEventListener("submit", handleAddItem);
+  renderHTML(toDos, false, mainfocusToday);
+  renderHTML(toDos, true, completedItems);
+  
 }
 
 init();
 
-// if (getLSGItem !== null) {
-//   const parsedToDos = JSON.parse(getLSGItem);
+/*********************************************
+  EVENT LISTENERS
+*********************************************/
+mainfocusToday.addEventListener("click", (e) => {
+  checkboxAction(e, true);
+  delelteAction(e);  
+  renderHTML(toDos, false, mainfocusToday);
+  renderHTML(toDos, true, completedItems);  
+  setLocalStorage(toDos);
+});
 
-//   parsedToDos.forEach((btn) => {
-//     addLists(btn.value);
-//   });
-// }
+completedItems.addEventListener("click", (e) => {
+checkboxAction(e, false);
+delelteAction(e);
+renderHTML(toDos, false, mainfocusToday);
+renderHTML(toDos, true, completedItems);  
+setLocalStorage(toDos);
+});
 
-// if (target.classList.contains(id)) {
-//   finishOn(e);
-// }
-// let finishedId = {
-//   clikedId: `${target.classList.add(id)}`,
-//   toggle: `${JSON.parse(localStorage.getItem("toggle"))}`,
-// };
-// console.log(finishedId);
 
-// finishToggle = localStorage.getItem("toggle");
-// if (finishToggle === "ON") {
-//   finishOff(e);
-// } else {
-//   finishOn(e);
-// }
 
-// finished.push(finishedId);
-// console.log(finished);
+signOut.addEventListener("click", (e) => {
+  clearData()
+});
+
