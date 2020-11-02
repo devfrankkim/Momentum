@@ -2,6 +2,8 @@ const mainfocusForm = document.querySelector(".mainfocus-form");
 const mainfocusInput = document.getElementById("mainfocus__input");
 const mainfocusToday = document.getElementById("mainfocus-list__today");
 const completedItems = document.getElementById("completed-items");
+var signOut = document.getElementById('signout')
+
 // const signOut = document.getElementById('signout')
 
 let toDos = [];
