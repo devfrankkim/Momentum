@@ -6,6 +6,10 @@ const introContinue = document.getElementById("intro__continue");
 const appStart = document.querySelector(".app-start");
 let greeting = document.querySelector(".greetings");
 let getLSG = localStorage.getItem("name");
+var signOut = document.getElementById('signout');
+
+let signOutData = [];
+signOut.style.display = "none";
 
 if (getLSG) {
   checkMorningNight(getLSG);
@@ -42,6 +46,14 @@ nameForm.addEventListener("submit", (e) => {
     checkMorningNight(checkValue);
     introContainer.classList.add("showCSS");
     appStart.classList.remove("showCSS");
+
+    let signOutObject = {
+      signout : true      
+    }
+
+    signOutData.push(signOutObject);    
+    renderLogOut(signOutData, true)    
+    localStorage.setItem("signout", JSON.stringify(signOutData));
   } else {
     placeholderColor(checkName);
   }
@@ -59,3 +71,23 @@ introContinue.addEventListener("click", (e) => {
     placeholderColor(checkName);
   }
 });
+
+function showSignOut(){
+  signOut.style.display = "block";
+}
+
+function renderLogOut(data, on){
+  data.forEach(item =>  item.signout === on && showSignOut())
+}
+
+function logOutData(){
+  let logOutItem = localStorage.getItem("signout") ? JSON.parse(localStorage.getItem("signout")) : [];
+  return logOutItem;  
+}
+
+function init(){
+  signOutData = logOutData();
+  renderLogOut(signOutData, true)
+}
+
+init();
