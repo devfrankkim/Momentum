@@ -40,8 +40,7 @@ function success(pos) {
   saveLatLong.push(latitude, longitude);
 
 
-  let openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKEY}&units=metric`;
-
+  let openWeather;
   if (location.protocol === 'http:') {
     openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKEY}&units=metric`;
   } else {
