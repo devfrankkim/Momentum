@@ -10,14 +10,13 @@
     <div class="intro-container">
       <div><span id="intro__name">Hello, what's your name?</span></div>
       <!-- <input type="text" id="intro__input" /> -->
-
       <form class="input-name" action="">
         <input id="intro__input" type="text" placeholder="What is your name?" />
       </form>
-
       <button id="intro__continue">Continue</button>
-    </div>
+    </div>    
     <!-- showCSS -->
+    <div><Button id="signout">Sign out</Button></div>
     <div class="app-start showCSS">
       <header class="weather-container">
         <div class="region">
@@ -40,7 +39,6 @@
         <div class="clock-container">
           <h1 class="time"></h1>
         </div>
-
         <h4 class="greetings"></h4>
       </div>
       <div class="mainfocus">
@@ -54,10 +52,11 @@
         <div class="mainfocus-list">
           <div>Today</div>
           <div id="mainfocus-list__today"></div>
+          <div>Completed</div>
+          <div id="completed-items"></div>
         </div>
       </div>
     </div>
-
     <script src="js/clock.js"></script>
     <script src="js/greeting.js"></script>
     <script src="js/focus.js"></script>
