@@ -72,10 +72,11 @@ getLocation();
 selectElement.addEventListener("change", (event) => {
   let openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=${event.target.value}`;
 
+
   if (event.target.value === "Fahrenheit") {
-    openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=imperial`;
+    openWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=imperial`;
   } else {
-    openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=metric`;
+    openWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=metric`;
   }
   fetchAPI(openWeather);
 });
