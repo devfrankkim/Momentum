@@ -75,8 +75,8 @@ selectElement.addEventListener("change", (event) => {
 
 
 
-  if (event.target.value === "Fahrenheit" && location.protocol === 'http:') {
-    openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=imperial`;
+  if (event.target.value === "Fahrenheit") {
+    openWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=imperial`;
   } else {
     openWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${saveLatLong[0]}&lon=${saveLatLong[1]}&appid=${APIKEY}&units=metric`;
   }
