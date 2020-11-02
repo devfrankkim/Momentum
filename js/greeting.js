@@ -32,7 +32,7 @@ function checkMorningNight(value) {
 }
 
 function placeholderColor(value) {
-  value.style.width = "15rem";
+  value.style.width = "25rem";
   value.placeholder = "Please write your beautiful name.";
   value.classList.add("placeholderred");
 }
