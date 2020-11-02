@@ -39,11 +39,13 @@ function createItemElement(item) {
   const deleteBtn = document.createElement("button");
   toDoItem.dataset.id = item.id;
   checkbox.setAttribute("type", "checkbox");
+  checkbox.classList.add('checkbox');
   span.textContent = item.value;
   
   deleteBtn.textContent = " ❌ ";
   (item.completed === true) ? checkbox.checked = true : checkbox.checked = false;
   deleteBtn.classList.add("delete");
+  
   
   toDoItem.appendChild(span);
   toDoItem.appendChild(checkbox);
@@ -59,7 +61,15 @@ function renderHTML(items, completed, containerDiv) {
 function handleAddItem(e) {
   e.preventDefault();
   const userInput = mainfocusInput.value;
-  addItem(userInput);
+
+  if(toDos.length > 2){
+    mainfocusInput.placeholder = "Let's focus on 4 goals each day!"
+    mainfocusInput.classList.add('placeholderred')
+  }
+
+  if(userInput && toDos.length < 4){
+    addItem(userInput);
+  }  
   mainfocusInput.value = "";
   renderHTML(toDos, false, mainfocusToday);
   renderHTML(toDos, true, completedItems);
