@@ -39,9 +39,17 @@ function success(pos) {
   let { latitude, longitude } = pos.coords;
   saveLatLong.push(latitude, longitude);
 
+
   let openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKEY}&units=metric`;
 
+  if (location.protocol === 'http:') {
+    openWeather = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKEY}&units=metric`;
+  } else {
+    openWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIKEY}&units=metric`;
+  }
+
   fetchAPI(openWeather);
+
 }
 //  ====== API error =======
 function error(err) {
