@@ -1,4 +1,4 @@
-let URLs = "picsum.photos/v2/list?page=2&limit=50"
+let URLs = "picsum.photos/v2/list?page=2&limit=100"
 
 async function fetchData(limitImgs){
     url = `https://picsum.photos/v2/list?page=2&limit=${limitImgs}`
@@ -18,13 +18,6 @@ function getLimitNumber(){
     const limit = urlArray[urlArray.length - 1];
     const limitNumber = limit.slice(limit.lastIndexOf('=') + 1);
     return limitNumber
-}
-
-function template(){
-    const image = new Image();
-    image.src = `images/${imgNumber + 1}.jpeg`;
-    image.classList.add("bgImage");
-    body.prepend(image);
 }
 
 function renderPage(datas){
