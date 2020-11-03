@@ -18,8 +18,8 @@ body {
   width: 100%;
   font-family: "Barlow Condensed", sans-serif;
   color: #fff;
-  text-shadow: 3px 2px 0 rgb(85, 85, 85), 1px -1px 0 rgb(143, 143, 143),
-    -1px 1px 0 rgb(128, 128, 128), 1px 1px 0 #000;
+  text-shadow: 0px 0px 0 rgb(85, 85, 85), 1px -1px 0 rgb(143, 143, 143),
+    -1px 1px 0 rgb(175 175 175), 1px 1px 0 #1a1a1a;
   letter-spacing: 5px;
 }
 *:focus {
@@ -100,12 +100,9 @@ button {
   margin: 3rem 0;
   font-weight: 500;
   font-size: 1.2rem;
-  text-shadow: 0px 0px 4px rgb(0 0 0), 1px -1px 0 rgb(0 0 0),
-    -1px 1px 0 rgb(128, 128, 128), 1px 1px 0 #000;
   line-height: 1.8rem;
   letter-spacing: 3px;
   width: 20rem;
-  /* overflow: hidden; */
 }
 #intro__input::placeholder {
   color: white;
@@ -148,11 +145,23 @@ button {
 }
 .weather-container .region {
   font-size: 0.7rem;
+  text-shadow: 0px 0px 0 rgb(85, 85, 85), 1px -1px 0 rgb(143, 143, 143),
+    -1px 1px 0 rgb(175 175 175), 1px 1px 0 #1a1a1a;
 }
 
 #weather-unit {
   font-size: 0.7rem;
+  background: #2c3e50;
+  color: #fff;
+  border-radius: 0.25em;
+  width: 8rem;
+  cursor: pointer;
 }
+
+#weather-unit:hover {
+  color: #f094ea;
+}
+
 #weather-temperature {
   font-size: 1.8rem;
 }
